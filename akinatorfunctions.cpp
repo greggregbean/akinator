@@ -2,21 +2,15 @@
 
 tree::tree()
 {
-    std::cout << "+++ CONSTRUCTION +++ \n" << std::endl;
-
-    numOfEl_ = 0;
-    numOfLevels_ = 0;
-
     head_ = new treeEl;
-    head_ -> num = 0;
-    head_ -> lower = nullptr;
-    head_ -> bigger = nullptr;
-    head_ -> level = 0;
+    head_ -> phrase = new char [PHRASEMAXLEN];
+    head_ -> yes = nullptr;
+    head_ -> no = nullptr;
 }
 
 void tree::textDump()
 {
-    std::cout << "Dump:"<< std::endl;
+    std::cout << "Text dump:"<< std::endl;
     recursiveDump(head_);
 }
 
@@ -24,20 +18,19 @@ void recursiveDump(treeEl* node)
 {
     std::cout << "{" << std::endl;
 
-    std::cout << node -> num << std::endl;
+    std::cout << node -> phrase << std::endl;
 
-    if(node -> lower != nullptr)
-        recursiveDump(node -> lower);
-    if(node -> bigger != nullptr)
-        recursiveDump(node -> bigger);
+    if(node -> yes != nullptr)
+        recursiveDump(node -> yes);
+    if(node -> no != nullptr)
+        recursiveDump(node -> no);
 
     std::cout << "}" << std::endl;
 }
 
-treeEl* tree::treeSearch (int val, int* searchStat)
+/*treeEl* tree::akinator ()
 {
     std::cout << "SEARCH:" << std::endl;
-    assert(searchStat != nullptr);
 
     treeEl* node = head_;
     assert(node != nullptr);
@@ -46,72 +39,121 @@ treeEl* tree::treeSearch (int val, int* searchStat)
 
     while(node != nullptr)
     {
-        if (node -> num == val)
+        char answer;
+
+        std::cout << "\"" << node -> phrase << "\"? (y/n) " << std::endl;
+        std::cin >> answer; 
+
+        if (answer == 'y')
         {
-            std::cout << "Элемент " << val <<" найден."<< std::endl;
-            *searchStat = FOUND;
-            return node;
+            if(node -> yes == nullptr)
+            {
+                std::cout << "Ваш персонаж \"" << node -> phrase << "\"." << std::endl;
+                return node;
+            }
+
+            else
+                node = node -> yes;
         }
         
-        else if (node -> num < val)
-        {
-            prevNode = node;
-            node = node -> bigger;
-        }
-
         else
         {
-            prevNode = node; 
-            node = node -> lower;
-        } 
+            if(node -> no == nullptr)
+            {
+                char addAnswer;
+                std::cout << "Программа не знает персонажа \"" << node -> phrase << "\". Хотите его добавить?" << std::endl;
+                std::cin >> addAnswer;
+
+                if(addAnswer == 'y')
+                {
+                    return treeInsert(node -> no);
+                }
+
+                else
+                {
+                    std::cout << "Персонаж не добавлен." << std::endl;
+                    return nullptr;  
+                }   
+            }
+
+            else
+                node = node -> no;
+        }
     }
+}*/
 
-    std::cout << "Элемент " << val <<" не найден."<< std::endl;
+void liner(FILE* fp, char* treeBuf)
+{
+    char symbol = getc(fp);
 
-    *searchStat = NOTFOUND;
+    int i = 0;
 
-    return prevNode;
+    while(symbol != EOF)
+    {
+        if((symbol != '\n') && (symbol != ' ') && (symbol != '\r') && (symbol != '\t'))
+        {
+            treeBuf[i] = symbol; 
+            i++;
+        }
+
+        symbol = getc(fp);
+    }
 }
 
-treeEl* tree::treeInsert (int val)
-{
-    std::cout << "INSERT: \n" << std::endl;
-    int searchStat;
+treeEl* treeInsert (char* phrase)
+{   
+    treeEl* newNode = new treeEl;
+    newNode -> phrase = phrase;
+    newNode -> yes = nullptr;
+    newNode -> no = nullptr;
 
-    treeEl* node = treeSearch(val, &searchStat);
+    return newNode;
+}
 
-    if (searchStat == FOUND)
+void recursiveReader (FILE* textTree, int* index)
+{   
+    char* phrase = (char*) calloc (PHRASEMAXLEN, sizeof(char));
+    
+    //Пропускаем {
+    (*index)++;
+
+    for((*index); (textTree != '}') && (textTree != '{'); (*index)++)
     {
-        std::cout << "Элемент уже есть в дереве!" << std::endl;
-        return node;
+
     }
 
-    if(val > node -> num)
+    //Если нет '}' рекурсивно вызываем функцию для поддерева yes
+    if(textTree[index] != '}')
     {
-        node -> bigger = new treeEl;
-        node -> bigger -> num = val;
-        node -> bigger -> bigger = nullptr;
-        node -> bigger -> lower = nullptr;
-        node -> bigger -> level = (node -> level) + 1;
-        numOfEl_ ++;
-        numOfLevels_ ++;
-
-        std::cout << "Элемент успешно вставлен!" << std::endl;
-        return node -> bigger;
+        fseek(textTree, -1, SEEK_CUR);
+        node -> yes = recursiveReader(textTree); 
     }
 
+    //Если есть '{' рекурсивно вызываем функцию для поддерева no
     else
     {
-        node -> lower = new treeEl;
-        node -> lower -> num = val;
-        node -> lower -> bigger = nullptr;
-        node -> lower -> lower = nullptr;
-        node -> lower -> level = (node -> level) + 1;
-        numOfEl_ ++;
-        numOfLevels_ ++;
+        printf("%c \n", symbol);
+        spaceSkip(textTree);
+        node -> no = recursiveReader(textTree);
+    } 
 
-        std::cout << "Элемент успешно вставлен!" << std::endl;
-        return node -> lower;
+    return node;*/
+}
+
+void tree::reader(FILE* textTree)
+{
+    //Закинули всё в буффер
+    char* treeBuf = (char*) calloc(TREEBUFLEN, sizeof(char)); 
+    liner(textTree, treeBuf);
+
+    //Распечатали буффер
+    for(int i = 0; treeBuf[i] != '\0'; i++)
+    {
+        printf("%c", treeBuf[i]);
     }
+    printf("\n");
 
+    //Запустили рекурсивную читалку буффера
+    int index = 0;
+    recursiveReader(treeBuf, &index);
 }
