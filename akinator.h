@@ -4,9 +4,7 @@
 #include <iostream>
 #include <stdio.h>
 #include <assert.h>
-#include <fstream>
 #include <string.h>
-#include <ctype.h>
 
 #define FOUND 1
 #define NOTFOUND 0

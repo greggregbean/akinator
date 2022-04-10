@@ -1,20 +1,16 @@
 digraph 
 {
- Animal [shape=record, fillcolor = darkkhaki, style = filled, label = " { Animal | Addr: 0x5568b13bab20 | {Yes: 0x5568b13bab80 | No: 0x5568b13babe0 }}" ] 
- Animal -> Dog; 
- Dog [shape=record, fillcolor = darkkhaki, style = filled, label = " { Dog | Addr: 0x5568b13bab80 | {Yes: 0x5568b13bb230 | No: 0x5568b13bb210 }}" ] 
- Dog -> Bobik; 
- Bobik [shape=record, fillcolor = darkkhaki, style = filled, label = " { Bobik | Addr: 0x5568b13bb230 | {Yes: (nil) | No: (nil) }}" ] 
- Dog -> Poltorashka; 
- Poltorashka [shape=record, fillcolor = darkkhaki, style = filled, label = " { Poltorashka | Addr: 0x5568b13bb210 | {Yes: (nil) | No: (nil) }}" ] 
+ Animal [shape=record, fillcolor = darkkhaki, style = filled, label = " { Animal | Addr: 0x55b9c4b0ab20 | {Yes: 0x55b9c4b0ab80 | No: 0x55b9c4b0abe0 }}" ] 
+ Animal -> Poltorashka; 
+ Poltorashka [shape=record, fillcolor = darkkhaki, style = filled, label = " { Poltorashka | Addr: 0x55b9c4b0ab80 | {Yes: (nil) | No: (nil) }}" ] 
  Animal -> Fachit; 
- Fachit [shape=record, fillcolor = darkkhaki, style = filled, label = " { Fachit | Addr: 0x5568b13babe0 | {Yes: 0x5568b13bac40 | No: 0x5568b13bad60 }}" ] 
+ Fachit [shape=record, fillcolor = darkkhaki, style = filled, label = " { Fachit | Addr: 0x55b9c4b0abe0 | {Yes: 0x55b9c4b0ac40 | No: 0x55b9c4b0ad60 }}" ] 
  Fachit -> Junior; 
- Junior [shape=record, fillcolor = darkkhaki, style = filled, label = " { Junior | Addr: 0x5568b13bac40 | {Yes: 0x5568b13baca0 | No: 0x5568b13bad00 }}" ] 
+ Junior [shape=record, fillcolor = darkkhaki, style = filled, label = " { Junior | Addr: 0x55b9c4b0ac40 | {Yes: 0x55b9c4b0aca0 | No: 0x55b9c4b0ad00 }}" ] 
  Junior -> Umnov; 
- Umnov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Umnov | Addr: 0x5568b13baca0 | {Yes: (nil) | No: (nil) }}" ] 
+ Umnov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Umnov | Addr: 0x55b9c4b0aca0 | {Yes: (nil) | No: (nil) }}" ] 
  Junior -> Tereshin; 
- Tereshin [shape=record, fillcolor = darkkhaki, style = filled, label = " { Tereshin | Addr: 0x5568b13bad00 | {Yes: (nil) | No: (nil) }}" ] 
+ Tereshin [shape=record, fillcolor = darkkhaki, style = filled, label = " { Tereshin | Addr: 0x55b9c4b0ad00 | {Yes: (nil) | No: (nil) }}" ] 
  Fachit -> Barabanshikov; 
- Barabanshikov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Barabanshikov | Addr: 0x5568b13bad60 | {Yes: (nil) | No: (nil) }}" ] 
+ Barabanshikov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Barabanshikov | Addr: 0x55b9c4b0ad60 | {Yes: (nil) | No: (nil) }}" ] 
 }

@@ -50,7 +50,7 @@ void recursiveGraph(FILE* filep, treeEl* node)
 
 void tree::graphDump(FILE* filep)
 {
-    printf("Recursive reade: ");
+    printf("GraphDump: ");
 
     fprintf(filep, "digraph \n{\n");
     recursiveGraph(filep, head_);
