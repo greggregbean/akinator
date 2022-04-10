@@ -1,24 +1,20 @@
 digraph 
 {
- Animal [shape=record, fillcolor = darkkhaki, style = filled, label = " { Animal | Addr: 0x562b8600fb20 | {Yes: 0x562b8600fb80 | No: 0x562b8600fbe0 }}" ] 
+ Animal [shape=record, fillcolor = darkkhaki, style = filled, label = " { Animal | Addr: 0x5568b13bab20 | {Yes: 0x5568b13bab80 | No: 0x5568b13babe0 }}" ] 
  Animal -> Dog; 
- Dog [shape=record, fillcolor = darkkhaki, style = filled, label = " { Dog | Addr: 0x562b8600fb80 | {Yes: 0x562b86010230 | No: 0x562b86010210 }}" ] 
- Dog -> Strong; 
- Strong [shape=record, fillcolor = darkkhaki, style = filled, label = " { Strong | Addr: 0x562b86010230 | {Yes: 0x562b860102f0 | No: 0x562b860102d0 }}" ] 
- Strong -> Rax; 
- Rax [shape=record, fillcolor = darkkhaki, style = filled, label = " { Rax | Addr: 0x562b860102f0 | {Yes: (nil) | No: (nil) }}" ] 
- Strong -> Bobik; 
- Bobik [shape=record, fillcolor = darkkhaki, style = filled, label = " { Bobik | Addr: 0x562b860102d0 | {Yes: (nil) | No: (nil) }}" ] 
+ Dog [shape=record, fillcolor = darkkhaki, style = filled, label = " { Dog | Addr: 0x5568b13bab80 | {Yes: 0x5568b13bb230 | No: 0x5568b13bb210 }}" ] 
+ Dog -> Bobik; 
+ Bobik [shape=record, fillcolor = darkkhaki, style = filled, label = " { Bobik | Addr: 0x5568b13bb230 | {Yes: (nil) | No: (nil) }}" ] 
  Dog -> Poltorashka; 
- Poltorashka [shape=record, fillcolor = darkkhaki, style = filled, label = " { Poltorashka | Addr: 0x562b86010210 | {Yes: (nil) | No: (nil) }}" ] 
+ Poltorashka [shape=record, fillcolor = darkkhaki, style = filled, label = " { Poltorashka | Addr: 0x5568b13bb210 | {Yes: (nil) | No: (nil) }}" ] 
  Animal -> Fachit; 
- Fachit [shape=record, fillcolor = darkkhaki, style = filled, label = " { Fachit | Addr: 0x562b8600fbe0 | {Yes: 0x562b8600fc40 | No: 0x562b8600fd60 }}" ] 
+ Fachit [shape=record, fillcolor = darkkhaki, style = filled, label = " { Fachit | Addr: 0x5568b13babe0 | {Yes: 0x5568b13bac40 | No: 0x5568b13bad60 }}" ] 
  Fachit -> Junior; 
- Junior [shape=record, fillcolor = darkkhaki, style = filled, label = " { Junior | Addr: 0x562b8600fc40 | {Yes: 0x562b8600fca0 | No: 0x562b8600fd00 }}" ] 
+ Junior [shape=record, fillcolor = darkkhaki, style = filled, label = " { Junior | Addr: 0x5568b13bac40 | {Yes: 0x5568b13baca0 | No: 0x5568b13bad00 }}" ] 
  Junior -> Umnov; 
- Umnov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Umnov | Addr: 0x562b8600fca0 | {Yes: (nil) | No: (nil) }}" ] 
+ Umnov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Umnov | Addr: 0x5568b13baca0 | {Yes: (nil) | No: (nil) }}" ] 
  Junior -> Tereshin; 
- Tereshin [shape=record, fillcolor = darkkhaki, style = filled, label = " { Tereshin | Addr: 0x562b8600fd00 | {Yes: (nil) | No: (nil) }}" ] 
+ Tereshin [shape=record, fillcolor = darkkhaki, style = filled, label = " { Tereshin | Addr: 0x5568b13bad00 | {Yes: (nil) | No: (nil) }}" ] 
  Fachit -> Barabanshikov; 
- Barabanshikov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Barabanshikov | Addr: 0x562b8600fd60 | {Yes: (nil) | No: (nil) }}" ] 
+ Barabanshikov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Barabanshikov | Addr: 0x5568b13bad60 | {Yes: (nil) | No: (nil) }}" ] 
 }

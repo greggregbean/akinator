@@ -13,6 +13,7 @@ int main()
         printf("Do you want to play again? (y/n) \n");
         char answer;
         scanf("%c", &answer);
+        printf("\n");
         while (getchar() != '\n') ;
         if(answer != 'y')
         {
