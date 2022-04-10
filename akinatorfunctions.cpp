@@ -33,7 +33,7 @@ void recursiveDump(treeEl* node)
 void recursiveGraph(FILE* filep, treeEl* node)
 {
     fprintf(filep, " %s [shape=record, fillcolor = darkkhaki, style = filled, label = \" { %s | Addr: %p | {Yes: %p | No: %p }}\" ] \n",     
-            node -> phrase, node -> phrase, node, node -> yes, node -> no);
+            node -> phrase, node -> phrase, (void*) node, (void*) node -> yes, (void*) node -> no);
     
     if (node -> yes != nullptr)
     {
@@ -59,27 +59,38 @@ void tree::graphDump(FILE* filep)
     printf("your graph in \"graph.dot\". \n");
 }
 
+treeEl* treeInsert (char* phrase)
+{   
+    treeEl* newNode = new treeEl{};
+
+    newNode -> phrase = phrase;
+    newNode -> yes = nullptr;
+    newNode -> no = nullptr;
+
+    return newNode;
+}
+
 treeEl* tree::akinator ()
 {
-    std::cout << "+++ AKINATOR +++" << std::endl;
+    printf("+++ AKINATOR +++ \n");
 
     treeEl* node = head_;
     assert(node != nullptr);
-
-    treeEl* prevNode = node;
 
     while(node != nullptr)
     {
         char answer;
 
-        printf("Your chracter is %s? (y/n)", node -> phrase);
+        printf("Your chracter is %s? (y/n) \n", node -> phrase);
         scanf("%c", &answer);
+        
+        while (getchar() != '\n') ;
 
         if (answer == 'y')
         {
             if(node -> yes == nullptr)
             {
-                printf("I guessed your character. It is %s.", node -> phrase);
+                printf("I guessed your character. It is %s. \n", node -> phrase);
                 return node;
             }
 
@@ -91,23 +102,35 @@ treeEl* tree::akinator ()
         {
             if(node -> no == nullptr)
             {
-                printf("I don't know your character. Do you want to add him? (y/n) \n";
+                printf("I don't know your character. Do you want to add him? (y/n) \n");
 
                 char addAnswer;
-                scanf("%c", addAnswer);
+                scanf("%c", &addAnswer);
                 
                 if(addAnswer == 'y')
                 {
-                    printf("What is name of your character?");
+                    printf("What is name of your character? \n");
+                    char* pers = (char*) calloc(PHRASEMAXLEN, sizeof(char));
+                    scanf("%s", pers);
 
-                    char* phrase = (char*) calloc(PHRASEMAXLEN, sizeof(char));
-                    printf("Tell me the di")
-                    return treeInsert(node -> no);
+                    printf("What is the distinguishing feature of your character from %s? \n", node -> phrase);
+                    char* difference = (char*) calloc(PHRASEMAXLEN, sizeof(char));
+                    scanf("%s", difference);
+
+                    while (getchar() != '\n') ;
+
+                    node -> no = treeInsert(node -> phrase);
+                    node -> yes = treeInsert(pers);
+                    node -> phrase = difference;
+
+                    printf("%s has been added to akinator's data. \n", node -> yes -> phrase);
+
+                    return node -> yes;
                 }
 
                 else
                 {
-                    std::cout << "Персонаж не добавлен." << std::endl;
+                    printf("Your character has not been added. \n");
                     return nullptr;  
                 }   
             }
@@ -116,6 +139,8 @@ treeEl* tree::akinator ()
                 node = node -> no;
         }
     }
+
+    return node;
 }
 
 void liner(FILE* fp, char* treeBuf)
@@ -137,21 +162,12 @@ void liner(FILE* fp, char* treeBuf)
     }
 }
 
-treeEl* treeInsert (treeEl* newNode, char* phrase)
-{   
-    newNode -> phrase = phrase;
-    newNode -> yes = nullptr;
-    newNode -> no = nullptr;
-
-    return newNode;
-}
-
 void nodeDump(treeEl* node)
 {
-    printf("Addr: %p, ", node);
+    printf("Addr: %p, ", (void*) node);
     printf("Phrase: \"%s\"", node -> phrase);
-    printf("(Yes: %p, ", node -> yes);
-    printf("No: %p); \n", node -> no);
+    printf("(Yes: %p, ", (void*) node -> yes);
+    printf("No: %p); \n", (void*) node -> no);
 }
 
 treeEl* recursiveReader (char* treeBuf, int* index)
@@ -174,8 +190,7 @@ treeEl* recursiveReader (char* treeBuf, int* index)
     //printf("прочли название: \"%s\" \n", treeBuf + *index);
     
     //Cоздаем новый узел
-    treeEl* node = new treeEl{};
-    treeInsert(node, phrase);
+    treeEl* node = treeInsert(phrase);
 
     //Если есть '{' рекурсивно вызываем функцию для поддерева yes
     if(treeBuf[(*index)] == '{')

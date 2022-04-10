@@ -1,8 +1,8 @@
 {Animal      
-    {Poltorashka_koshka}
+    {Poltorashka}
     {Fachit
         {Junior
-            {Umnov_junior}
+            {Umnov}
             {Tereshin}
         }
         {Barabanshikov}

@@ -35,8 +35,8 @@ class tree
 
 void recursiveDump(treeEl* node);
 void recursiveGraph(FILE* filep, treeEl* node);
-treeEl* treeInsert (treeEl* newNode,char* phrase);
-char* liner(FILE *fp);
+treeEl* treeInsert (char* phrase);
+void liner(FILE* fp, char* treeBuf);
 treeEl* recursiveReader(char* treeBuf, int* index);
 
 #endif
