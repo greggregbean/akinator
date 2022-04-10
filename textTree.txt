@@ -1,4 +1,10 @@
 {Animal      
-    {Monkey}
-    {Jiraf}
+    {Poltorashka_koshka}
+    {Fachit
+        {Junior
+            {Umnov_junior}
+            {Tereshin}
+        }
+        {Barabanshikov}
+    }
 }

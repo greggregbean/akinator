@@ -12,25 +12,56 @@ void tree::textDump()
 {
     std::cout << "Text dump:"<< std::endl;
     recursiveDump(head_);
+    printf("\n");
 }
 
 void recursiveDump(treeEl* node)
 {
-    std::cout << "{" << std::endl;
+    printf("{\n");
 
-    std::cout << node -> phrase << std::endl;
+    printf("%s \n", node -> phrase);
 
-    if(node -> yes != nullptr)
+    if (node -> yes != nullptr)
         recursiveDump(node -> yes);
-    if(node -> no != nullptr)
+    if (node -> no != nullptr)
         recursiveDump(node -> no);
 
-    std::cout << "}" << std::endl;
+    printf("}\n");
+
 }
 
-/*treeEl* tree::akinator ()
+void recursiveGraph(FILE* filep, treeEl* node)
 {
-    std::cout << "SEARCH:" << std::endl;
+    fprintf(filep, " %s [shape=record, fillcolor = darkkhaki, style = filled, label = \" { %s | Addr: %p | {Yes: %p | No: %p }}\" ] \n",     
+            node -> phrase, node -> phrase, node, node -> yes, node -> no);
+    
+    if (node -> yes != nullptr)
+    {
+        fprintf(filep, " %s -> %s; \n", node -> phrase, node -> yes -> phrase);
+        recursiveGraph(filep, node -> yes);
+    }
+
+    if (node -> no != nullptr)
+    {
+        fprintf(filep, " %s -> %s; \n", node -> phrase, node -> no -> phrase);
+        recursiveGraph(filep, node -> no);
+    }
+}
+
+void tree::graphDump(FILE* filep)
+{
+    printf("Recursive reade: ");
+
+    fprintf(filep, "digraph \n{\n");
+    recursiveGraph(filep, head_);
+    fprintf(filep, "}");
+
+    printf("your graph in \"graph.dot\". \n");
+}
+
+treeEl* tree::akinator ()
+{
+    std::cout << "+++ AKINATOR +++" << std::endl;
 
     treeEl* node = head_;
     assert(node != nullptr);
@@ -41,14 +72,14 @@ void recursiveDump(treeEl* node)
     {
         char answer;
 
-        std::cout << "\"" << node -> phrase << "\"? (y/n) " << std::endl;
-        std::cin >> answer; 
+        printf("Your chracter is %s? (y/n)", node -> phrase);
+        scanf("%c", &answer);
 
         if (answer == 'y')
         {
             if(node -> yes == nullptr)
             {
-                std::cout << "Ваш персонаж \"" << node -> phrase << "\"." << std::endl;
+                printf("I guessed your character. It is %s.", node -> phrase);
                 return node;
             }
 
@@ -60,12 +91,17 @@ void recursiveDump(treeEl* node)
         {
             if(node -> no == nullptr)
             {
-                char addAnswer;
-                std::cout << "Программа не знает персонажа \"" << node -> phrase << "\". Хотите его добавить?" << std::endl;
-                std::cin >> addAnswer;
+                printf("I don't know your character. Do you want to add him? (y/n) \n";
 
+                char addAnswer;
+                scanf("%c", addAnswer);
+                
                 if(addAnswer == 'y')
                 {
+                    printf("What is name of your character?");
+
+                    char* phrase = (char*) calloc(PHRASEMAXLEN, sizeof(char));
+                    printf("Tell me the di")
                     return treeInsert(node -> no);
                 }
 
@@ -80,7 +116,7 @@ void recursiveDump(treeEl* node)
                 node = node -> no;
         }
     }
-}*/
+}
 
 void liner(FILE* fp, char* treeBuf)
 {
@@ -90,6 +126,7 @@ void liner(FILE* fp, char* treeBuf)
 
     while(symbol != EOF)
     {
+        if(symbol)
         if((symbol != '\n') && (symbol != ' ') && (symbol != '\r') && (symbol != '\t'))
         {
             treeBuf[i] = symbol; 
@@ -100,9 +137,8 @@ void liner(FILE* fp, char* treeBuf)
     }
 }
 
-treeEl* treeInsert (char* phrase)
+treeEl* treeInsert (treeEl* newNode, char* phrase)
 {   
-    treeEl* newNode = new treeEl;
     newNode -> phrase = phrase;
     newNode -> yes = nullptr;
     newNode -> no = nullptr;
@@ -110,43 +146,63 @@ treeEl* treeInsert (char* phrase)
     return newNode;
 }
 
-void recursiveReader (FILE* textTree, int* index)
+void nodeDump(treeEl* node)
+{
+    printf("Addr: %p, ", node);
+    printf("Phrase: \"%s\"", node -> phrase);
+    printf("(Yes: %p, ", node -> yes);
+    printf("No: %p); \n", node -> no);
+}
+
+treeEl* recursiveReader (char* treeBuf, int* index)
 {   
     char* phrase = (char*) calloc (PHRASEMAXLEN, sizeof(char));
-    
-    //Пропускаем {
+
+    //Пропускаем '{'
+    assert(treeBuf[*index] == '{');
     (*index)++;
 
-    for((*index); (textTree != '}') && (textTree != '{'); (*index)++)
-    {
+    int i = 0;
 
+    while((treeBuf[*index] != '}') && (treeBuf[*index] != '{'))
+    {
+        phrase[i] = treeBuf[*index];
+        (*index)++;
+        i++;
     }
 
-    //Если нет '}' рекурсивно вызываем функцию для поддерева yes
-    if(textTree[index] != '}')
+    //printf("прочли название: \"%s\" \n", treeBuf + *index);
+    
+    //Cоздаем новый узел
+    treeEl* node = new treeEl{};
+    treeInsert(node, phrase);
+
+    //Если есть '{' рекурсивно вызываем функцию для поддерева yes
+    if(treeBuf[(*index)] == '{')
     {
-        fseek(textTree, -1, SEEK_CUR);
-        node -> yes = recursiveReader(textTree); 
+        node -> yes = recursiveReader(treeBuf, index); 
+        node -> no = recursiveReader(treeBuf, index);
     }
 
-    //Если есть '{' рекурсивно вызываем функцию для поддерева no
-    else
-    {
-        printf("%c \n", symbol);
-        spaceSkip(textTree);
-        node -> no = recursiveReader(textTree);
-    } 
+    //printf("сча рванёт: \"%s\" \n", treeBuf + *index);
+    nodeDump(node);
+    assert(treeBuf[(*index)] == '}');
 
-    return node;*/
+    (*index)++;
+
+    return node;
 }
 
 void tree::reader(FILE* textTree)
 {
+    printf("READER: \n");
+
     //Закинули всё в буффер
     char* treeBuf = (char*) calloc(TREEBUFLEN, sizeof(char)); 
     liner(textTree, treeBuf);
 
     //Распечатали буффер
+    printf("Data in buffer: ");
     for(int i = 0; treeBuf[i] != '\0'; i++)
     {
         printf("%c", treeBuf[i]);
@@ -155,5 +211,6 @@ void tree::reader(FILE* textTree)
 
     //Запустили рекурсивную читалку буффера
     int index = 0;
-    recursiveReader(treeBuf, &index);
+    head_ = recursiveReader(treeBuf, &index);
+    printf("\n");
 }
