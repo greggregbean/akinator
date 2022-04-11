@@ -186,8 +186,6 @@ treeEl* recursiveReader (char* treeBuf, int* index)
         (*index)++;
         i++;
     }
-
-    //printf("прочли название: \"%s\" \n", treeBuf + *index);
     
     //Cоздаем новый узел
     treeEl* node = treeInsert(phrase);
@@ -199,7 +197,6 @@ treeEl* recursiveReader (char* treeBuf, int* index)
         node -> no = recursiveReader(treeBuf, index);
     }
 
-    //printf("сча рванёт: \"%s\" \n", treeBuf + *index);
     nodeDump(node);
     assert(treeBuf[(*index)] == '}');
 
