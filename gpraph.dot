@@ -1,16 +1,16 @@
 digraph 
 {
- Animal [shape=record, fillcolor = darkkhaki, style = filled, label = " { Animal | Addr: 0x5615976bb940 | {Yes: 0x5615976bb9a0 | No: 0x5615976bba00 }}" ] 
+ Animal [shape=record, fillcolor = darkkhaki, style = filled, label = " { Animal | Addr: 0x55d51be74940 | {Yes: 0x55d51be749a0 | No: 0x55d51be74a00 }}" ] 
  Animal -> Poltorashka [label = " Yes "]; 
- Poltorashka [shape=record, fillcolor = darkkhaki, style = filled, label = " { Poltorashka | Addr: 0x5615976bb9a0 | {Yes: (nil) | No: (nil) }}" ] 
+ Poltorashka [shape=record, fillcolor = darkkhaki, style = filled, label = " { Poltorashka | Addr: 0x55d51be749a0 | {Yes: (nil) | No: (nil) }}" ] 
  Animal -> Fachit [label = " No "]; 
- Fachit [shape=record, fillcolor = darkkhaki, style = filled, label = " { Fachit | Addr: 0x5615976bba00 | {Yes: 0x5615976bba60 | No: 0x5615976bbb80 }}" ] 
+ Fachit [shape=record, fillcolor = darkkhaki, style = filled, label = " { Fachit | Addr: 0x55d51be74a00 | {Yes: 0x55d51be74a60 | No: 0x55d51be74b80 }}" ] 
  Fachit -> Junior [label = " Yes "]; 
- Junior [shape=record, fillcolor = darkkhaki, style = filled, label = " { Junior | Addr: 0x5615976bba60 | {Yes: 0x5615976bbac0 | No: 0x5615976bbb20 }}" ] 
+ Junior [shape=record, fillcolor = darkkhaki, style = filled, label = " { Junior | Addr: 0x55d51be74a60 | {Yes: 0x55d51be74ac0 | No: 0x55d51be74b20 }}" ] 
  Junior -> Umnov [label = " Yes "]; 
- Umnov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Umnov | Addr: 0x5615976bbac0 | {Yes: (nil) | No: (nil) }}" ] 
+ Umnov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Umnov | Addr: 0x55d51be74ac0 | {Yes: (nil) | No: (nil) }}" ] 
  Junior -> Tereshin [label = " No "]; 
- Tereshin [shape=record, fillcolor = darkkhaki, style = filled, label = " { Tereshin | Addr: 0x5615976bbb20 | {Yes: (nil) | No: (nil) }}" ] 
+ Tereshin [shape=record, fillcolor = darkkhaki, style = filled, label = " { Tereshin | Addr: 0x55d51be74b20 | {Yes: (nil) | No: (nil) }}" ] 
  Fachit -> Barabanshikov [label = " No "]; 
- Barabanshikov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Barabanshikov | Addr: 0x5615976bbb80 | {Yes: (nil) | No: (nil) }}" ] 
+ Barabanshikov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Barabanshikov | Addr: 0x55d51be74b80 | {Yes: (nil) | No: (nil) }}" ] 
 }
