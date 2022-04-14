@@ -27,7 +27,6 @@ void recursiveDump(treeEl* node)
         recursiveDump(node -> no);
 
     printf("}\n");
-
 }
 
 void recursiveGraph(FILE* filep, treeEl* node)
@@ -37,13 +36,13 @@ void recursiveGraph(FILE* filep, treeEl* node)
     
     if (node -> yes != nullptr)
     {
-        fprintf(filep, " %s -> %s; \n", node -> phrase, node -> yes -> phrase);
+        fprintf(filep, " %s -> %s [label = \" Yes \"]; \n", node -> phrase, node -> yes -> phrase);
         recursiveGraph(filep, node -> yes);
     }
 
     if (node -> no != nullptr)
     {
-        fprintf(filep, " %s -> %s; \n", node -> phrase, node -> no -> phrase);
+        fprintf(filep, " %s -> %s [label = \" No \"]; \n", node -> phrase, node -> no -> phrase);
         recursiveGraph(filep, node -> no);
     }
 }
@@ -57,6 +56,28 @@ void tree::graphDump(FILE* filep)
     fprintf(filep, "}");
 
     printf("your graph in \"graph.dot\". \n");
+}
+
+void tree::fileDump(FILE* filep)
+{
+    printf("File dump:");
+    recursiveFileDump(filep, head_);
+    printf(" tree in \"textTree.txt\". ");
+    printf("\n");    
+}
+
+void recursiveFileDump(FILE* filep, treeEl* node)
+{
+    fprintf(filep, "{\n");
+
+    fprintf(filep, "%s \n", node -> phrase);
+
+    if (node -> yes != nullptr)
+        recursiveFileDump(filep, node -> yes);
+    if (node -> no != nullptr)
+        recursiveFileDump(filep, node -> no);
+
+    fprintf(filep, "}\n");
 }
 
 treeEl* treeInsert (char* phrase)
@@ -79,14 +100,21 @@ treeEl* tree::akinator ()
 
     while(node != nullptr)
     {
-        char answer;
-
         printf("Your chracter is %s? (y/n) \n", node -> phrase);
-        scanf("%c", &answer);
-        
-        while (getchar() != '\n') ;
 
-        if (answer == 'y')
+        char answer[PHRASEMAXLEN];
+
+        scanf("%s", answer);
+
+        while((strcmp(answer,"y") != 0) && (strcmp(answer, "n") != 0))
+        {
+            printf("Please enter 'y' or 'n'. \n");
+            scanf("%s", answer);
+        }
+
+        while(getchar() != '\n') ;
+
+        if (answer[0] == 'y')
         {
             if(node -> yes == nullptr)
             {
@@ -98,16 +126,23 @@ treeEl* tree::akinator ()
                 node = node -> yes;
         }
         
-        else
+        else if (answer[0] == 'n')
         {
             if(node -> no == nullptr)
             {
                 printf("I don't know your character. Do you want to add him? (y/n) \n");
 
-                char addAnswer;
-                scanf("%c", &addAnswer);
+                char addAnswer[PHRASEMAXLEN];
+
+                scanf("%s", addAnswer);
+
+                while((strcmp(addAnswer,"y") != 0) && (strcmp(addAnswer, "n") != 0))
+                {
+                    printf("Please enter 'y' or 'n'. \n");
+                    scanf("%s", addAnswer);
+                }
                 
-                if(addAnswer == 'y')
+                if(addAnswer[0] == 'y')
                 {
                     printf("What is name of your character? \n");
                     char* pers = (char*) calloc(PHRASEMAXLEN, sizeof(char));
@@ -116,8 +151,6 @@ treeEl* tree::akinator ()
                     printf("What is the distinguishing feature of your character from %s? \n", node -> phrase);
                     char* difference = (char*) calloc(PHRASEMAXLEN, sizeof(char));
                     scanf("%s", difference);
-
-                    while (getchar() != '\n') ;
 
                     node -> no = treeInsert(node -> phrase);
                     node -> yes = treeInsert(pers);
@@ -128,11 +161,11 @@ treeEl* tree::akinator ()
                     return node -> yes;
                 }
 
-                else
+                else if(addAnswer[0] == 'n')
                 {
                     printf("Your character has not been added. \n");
                     return nullptr;  
-                }   
+                }
             }
 
             else

@@ -1,10 +1,21 @@
-{Animal      
-    {Poltorashka}
-    {Fachit
-        {Junior
-            {Umnov}
-            {Tereshin}
-        }
-        {Barabanshikov}
-    }
+{
+Animal 
+{
+Poltorashka 
+}
+{
+Fachit 
+{
+Junior 
+{
+Umnov 
+}
+{
+Tereshin 
+}
+}
+{
+Barabanshikov 
+}
+}
 }

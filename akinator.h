@@ -27,12 +27,14 @@ class tree
         tree();
         void textDump();
         void graphDump(FILE* filep);
+        void fileDump(FILE* filep);
         void reader(FILE* textTree);
         treeEl* akinator();
 };
 
 void recursiveDump(treeEl* node);
 void recursiveGraph(FILE* filep, treeEl* node);
+void recursiveFileDump(FILE* filep, treeEl* node);
 treeEl* treeInsert (char* phrase);
 void liner(FILE* fp, char* treeBuf);
 treeEl* recursiveReader(char* treeBuf, int* index);
