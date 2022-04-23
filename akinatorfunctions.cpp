@@ -31,18 +31,18 @@ void recursiveDump(treeEl* node)
 
 void recursiveGraph(FILE* filep, treeEl* node)
 {
-    fprintf(filep, " %s [shape=record, fillcolor = darkkhaki, style = filled, label = \" { %s | Addr: %p | {Yes: %p | No: %p }}\" ] \n",     
-            node -> phrase, node -> phrase, (void*) node, (void*) node -> yes, (void*) node -> no);
+    fprintf(filep, " %d [shape=record, fillcolor = darkkhaki, style = filled, label = \" { %s | Addr: %p | {Yes: %p | No: %p }}\" ] \n",     
+            node, node -> phrase, (void*) node, (void*) node -> yes, (void*) node -> no);
     
     if (node -> yes != nullptr)
     {
-        fprintf(filep, " %s -> %s [label = \" Yes \"]; \n", node -> phrase, node -> yes -> phrase);
+        fprintf(filep, " %d -> %d [label = \" Yes \"]; \n", node, node -> yes);
         recursiveGraph(filep, node -> yes);
     }
 
     if (node -> no != nullptr)
     {
-        fprintf(filep, " %s -> %s [label = \" No \"]; \n", node -> phrase, node -> no -> phrase);
+        fprintf(filep, " %d -> %d [label = \" No \"]; \n", node, node -> no);
         recursiveGraph(filep, node -> no);
     }
 }
@@ -146,11 +146,51 @@ treeEl* tree::akinator ()
                 {
                     printf("What is name of your character? \n");
                     char* pers = (char*) calloc(PHRASEMAXLEN, sizeof(char));
-                    scanf("%s", pers);
+                    
+                    char symbol = getchar();
+                    while((symbol == ' ') || (symbol == '\t') || (symbol == '\n'))
+                        symbol = getchar();
+                    
+                    size_t index = 0;
+
+                    while(symbol != '\n')
+                    {
+                        pers[index] = symbol;
+                        index++;
+                        symbol = getchar();
+                    }
+
+                    index--;
+
+                    while((pers[index] == ' ') || pers[index] == '\t' || pers[index] == '\n')
+                    {
+                        pers[index] = '\0';
+                        index--;
+                    }
 
                     printf("What is the distinguishing feature of your character from %s? \n", node -> phrase);
                     char* difference = (char*) calloc(PHRASEMAXLEN, sizeof(char));
-                    scanf("%s", difference);
+
+                    symbol = getchar();
+                    while((symbol == ' ') || (symbol == '\t') || (symbol == '\n'))
+                        symbol = getchar();
+                    
+                    index = 0;
+
+                    while(symbol != '\n')
+                    {
+                        difference[index] = symbol;
+                        index++;
+                        symbol = getchar();
+                    }
+
+                    index--;
+
+                    while((difference[index] == ' ') || difference[index] == '\t' || difference[index] == '\n')
+                    {
+                        difference[index] = '\0';
+                        index--;
+                    }
 
                     node -> no = treeInsert(node -> phrase);
                     node -> yes = treeInsert(pers);
@@ -176,23 +216,55 @@ treeEl* tree::akinator ()
     return node;
 }
 
+void spaceSkip(FILE* filep)
+{
+    char symbol;
+    while(((symbol = getc(filep)) == ' ') || (symbol == '\t') || (symbol == '\r') || (symbol == '\n')) ;
+    ungetc(symbol, filep);
+}
+
 void liner(FILE* fp, char* treeBuf)
 {
-    char symbol = getc(fp);
+    printf("LINER:\n");
 
-    int i = 0;
+    size_t index = 0;
+
+    spaceSkip(fp);
+
+    char symbol = getc(fp);
 
     while(symbol != EOF)
     {
-        if(symbol)
-        if((symbol != '\n') && (symbol != ' ') && (symbol != '\r') && (symbol != '\t'))
+        if((symbol == '{') || (symbol == '}'))
         {
-            treeBuf[i] = symbol; 
-            i++;
+            treeBuf[index] = symbol;
+            index++;
+            spaceSkip(fp);
+            symbol = getc(fp);
         }
 
-        symbol = getc(fp);
-    }
+        else if((symbol == '\n') || (symbol == ' ') || (symbol == '\t') || (symbol == '\r'))
+            symbol = getc(fp);
+
+        else
+        {
+            while((symbol != '\n') && (symbol != '{') && (symbol != '}'))
+            {
+                if((symbol == ' ') || (symbol == '\t'))
+                {
+                    spaceSkip(fp);
+                    treeBuf[index] = ' ';
+                    index++;
+                    symbol = getc(fp);
+                }
+                treeBuf[index] = symbol;
+                index++;
+                symbol = getc(fp); 
+            }
+
+            spaceSkip(fp);
+        }        
+    } 
 }
 
 void nodeDump(treeEl* node)

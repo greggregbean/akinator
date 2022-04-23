@@ -1,21 +1,15 @@
 {
-Animal 
+Animal  
 {
-Poltorashka 
+Otchislen v 1 sem 
+{
+Gosha Moskvin 
 }
 {
-Fachit 
-{
-Junior 
-{
-Umnov 
-}
-{
-Tereshin 
+Monkey  
 }
 }
 {
-Barabanshikov 
-}
+Kostik chelik  
 }
 }

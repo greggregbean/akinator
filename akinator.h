@@ -32,6 +32,7 @@ class tree
         treeEl* akinator();
 };
 
+void spaceSkip(FILE* filep);
 void recursiveDump(treeEl* node);
 void recursiveGraph(FILE* filep, treeEl* node);
 void recursiveFileDump(FILE* filep, treeEl* node);

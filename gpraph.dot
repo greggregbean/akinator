@@ -1,16 +1,12 @@
 digraph 
 {
- Animal [shape=record, fillcolor = darkkhaki, style = filled, label = " { Animal | Addr: 0x55d51be74940 | {Yes: 0x55d51be749a0 | No: 0x55d51be74a00 }}" ] 
- Animal -> Poltorashka [label = " Yes "]; 
- Poltorashka [shape=record, fillcolor = darkkhaki, style = filled, label = " { Poltorashka | Addr: 0x55d51be749a0 | {Yes: (nil) | No: (nil) }}" ] 
- Animal -> Fachit [label = " No "]; 
- Fachit [shape=record, fillcolor = darkkhaki, style = filled, label = " { Fachit | Addr: 0x55d51be74a00 | {Yes: 0x55d51be74a60 | No: 0x55d51be74b80 }}" ] 
- Fachit -> Junior [label = " Yes "]; 
- Junior [shape=record, fillcolor = darkkhaki, style = filled, label = " { Junior | Addr: 0x55d51be74a60 | {Yes: 0x55d51be74ac0 | No: 0x55d51be74b20 }}" ] 
- Junior -> Umnov [label = " Yes "]; 
- Umnov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Umnov | Addr: 0x55d51be74ac0 | {Yes: (nil) | No: (nil) }}" ] 
- Junior -> Tereshin [label = " No "]; 
- Tereshin [shape=record, fillcolor = darkkhaki, style = filled, label = " { Tereshin | Addr: 0x55d51be74b20 | {Yes: (nil) | No: (nil) }}" ] 
- Fachit -> Barabanshikov [label = " No "]; 
- Barabanshikov [shape=record, fillcolor = darkkhaki, style = filled, label = " { Barabanshikov | Addr: 0x55d51be74b80 | {Yes: (nil) | No: (nil) }}" ] 
+ 24824128 [shape=record, fillcolor = darkkhaki, style = filled, label = " { Animal  | Addr: 0x5581017ac940 | {Yes: 0x5581017ac9a0 | No: 0x5581017aca00 }}" ] 
+ 24824128 -> 24824224 [label = " Yes "]; 
+ 24824224 [shape=record, fillcolor = darkkhaki, style = filled, label = " { Otchislen v 1 sem | Addr: 0x5581017ac9a0 | {Yes: 0x5581017abda0 | No: 0x5581017abd80 }}" ] 
+ 24824224 -> 24821152 [label = " Yes "]; 
+ 24821152 [shape=record, fillcolor = darkkhaki, style = filled, label = " { Gosha Moskvin | Addr: 0x5581017abda0 | {Yes: (nil) | No: (nil) }}" ] 
+ 24824224 -> 24821120 [label = " No "]; 
+ 24821120 [shape=record, fillcolor = darkkhaki, style = filled, label = " { Monkey  | Addr: 0x5581017abd80 | {Yes: (nil) | No: (nil) }}" ] 
+ 24824128 -> 24824320 [label = " No "]; 
+ 24824320 [shape=record, fillcolor = darkkhaki, style = filled, label = " { Kostik chelik  | Addr: 0x5581017aca00 | {Yes: (nil) | No: (nil) }}" ] 
 }
